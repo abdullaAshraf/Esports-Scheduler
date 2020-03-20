@@ -6,7 +6,7 @@ from task import updatePlayers
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=60)
+@sched.scheduled_job('interval', minutes=1)
 def fetch_new_posts():
     succeeded = updatePlayers()
     if succeeded:
