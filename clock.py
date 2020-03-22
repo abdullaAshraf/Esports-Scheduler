@@ -6,7 +6,7 @@ from task import updatePlayers
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=1)
+@sched.scheduled_job('interval', minutes=60)
 def update_players():
     succeeded = updatePlayers()
     if succeeded:
