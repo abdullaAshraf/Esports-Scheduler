@@ -1,13 +1,41 @@
 class Player:
     id = ""
-    owned = 0
     points = 0
     games = 0
-    price = 0
 
-    def __init__(self,id,owned,points,games,price):
-        self.id = id
-        self.owned = owned
-        self.points = points
-        self.games = games
-        self.price = price
+    def addGame(self,game):
+        self.games += 1
+        self.points += calculatePoints(game)
+
+    def ptsGame(self):
+        return self.points / self.games
+
+    def getData(self):
+        return {'points' : self.points, 'games' : self.games}
+
+    def print(self):
+        print(f'{self.id} : {self.games} - {self.points}')
+
+    def merge(self,player):
+        self.points += player.points
+        self.games += player.games
+        
+def calculatePoints(game) -> float:
+    points = 0
+    points += 3 * int(game['Kills'])
+    points -= 1 * int(game['Deaths'])
+    points += 1.5 * int(game['Assists'])
+    points += 0.02 * int(game['CS'])
+
+    if (int(game['Kills']) + int(game['Assists']) >= 10):
+        points += 3
+
+    if (game['PlayerWin'] == 'Yes'):
+        if (float(game['Gamelength Number']) <= 20):
+            points += 5
+        elif (float(game['Gamelength Number']) <= 30):
+            points += 3
+        else:
+            points += 2
+    
+    return points
